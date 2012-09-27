@@ -4,10 +4,10 @@
 //! @date 		12/09/2012
 //! @brief 		Header file for UartComms.c
 //! @details
-//!		<b>Last Modified:			</b> 12/09/2012					\n
+//!		<b>Last Modified:			</b> 27/09/2012					\n
 //!		<b>Version:					</b> v1.0.0						\n
-//!		<b>Company:					</b> Beta Solutions				\n
-//!		<b>Project:					</b> VicTrust BLDC Controller	\n
+//!		<b>Company:					</b> CladLabs					\n
+//!		<b>Project:					</b> Template Code				\n
 //!		<b>Computer Architecture:	</b> ARM						\n
 //!		<b>Compiler:				</b> GCC						\n
 //! 	<b>uC Model:				</b> PSoC5						\n
