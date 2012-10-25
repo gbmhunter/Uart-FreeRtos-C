@@ -45,15 +45,12 @@
 // See the function definitions in UartComms.c for more information
 
 void 		UartComms_Start(uint32 txTaskStackSize, uint8 txTaskPriority);
-bool_t 		UartComms_PutString(char* string);
+bool_t 		UartComms_PutString(const char* string);
 void 		UartComms_GetChar(char* singleChar);
 void 		UartComms_SleepLock(void);
 void 		UartComms_SleepUnlock(void);
 bool_t 		UartComms_IsAsleep(void);
 xTaskHandle UartComms_ReturnTxTaskHandle(void);
-
-
-
 
 //===============================================================================================//
 //=================================== PUBLIC VARIABLES/STRUCTURES ===============================//

@@ -107,7 +107,7 @@ struct{
 //===============================================================================================//
 
 // General functions
-void vUartComms_TxTask(void *pvParameters);
+void UartComms_TxTask(void *pvParameters);
 
 // ISR's
 CY_ISR_PROTO(UartComms_UartRxIsr);
@@ -161,7 +161,7 @@ xTaskHandle UartComms_ReturnTxTaskHandle(void)
 //!				queue (and hence the semaphore taken), or the tx queue is full (hence the UART is busy).
 //! @note		Thread-safe
 //! @public
-bool_t UartComms_PutString(char* string)
+bool_t UartComms_PutString(const char* string)
 {
 	// Take semaphore to allow placing things on queue
 	if(xSemaphoreTake(_xTxMutexSemaphore, TX_SEMAPHORE_MAX_WAIT_TIME_MS/portTICK_RATE_MS) == pdFAIL)
@@ -308,7 +308,7 @@ void UartComms_SleepUnlock(void)
 //! @note		Not thread-safe. Do not call from any task, this function is a task that
 //!				is called by the FreeRTOS kernel
 //! @private
-void vUartComms_TxTask(void *pvParameters)
+void UartComms_TxTask(void *pvParameters)
 {
 	#if(configPRINT_DEBUG_UART_COMMS == 1)
 		static char* msgUartCommsTxTaskStarted = "UART_COMMS: Comms Uart TX task started.\r\n";
