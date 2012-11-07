@@ -5,7 +5,7 @@
 //! @brief 		Used for receiving/sending comms messages across the dedicated UART
 //! @details
 //!		<b>Last Modified:			</b> 07/11/2012					\n
-//!		<b>Version:					</b> v1.0.1						\n
+//!		<b>Version:					</b> v1.0.2						\n
 //!		<b>Company:					</b> CladLabs					\n
 //!		<b>Project:					</b> Free Code Modules			\n
 //!		<b>Language:				</b> C							\n
@@ -26,6 +26,7 @@
 //!				Added C++ header guard. Added warning not to call
 //!				Uart_PutString() from an ISR. Moved documentation into
 //!				.h file.
+//!			v1.0.2 -> Fixed comments (see .c to .h)
 //!		
 
 //===============================================================================================//

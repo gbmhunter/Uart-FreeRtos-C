@@ -2,10 +2,10 @@
 //! @file 		UartComms.c
 //! @author 	Geoffrey Hunter <gbmhunter@gmail.com> (www.cladlab.com)
 //! @date 		12/09/2012
-//! @brief 		Used for receiving/sending comms messages across the dedicated UART
+//! @brief 		See UartComms.h
 //! @details
 //!		<b>Last Modified:			</b> 07/11/2012					\n
-//!		<b>Version:					</b> v1.0.1						\n
+//!		<b>Version:					</b> v1.0.2						\n
 //!		<b>Company:					</b> CladLabs					\n
 //!		<b>Project:					</b> Free Code Modules			\n
 //!		<b>Language:				</b> C							\n
@@ -16,7 +16,7 @@
 //!		<b>Documentation Format:	</b> Doxygen					\n
 //!		<b>License:					</b> GPLv3						\n
 //!	
-//!		See the Doxygen documentation or UartComms.c for a detailed description on this module.
+//!		See the Doxygen documentation or UartComms.h for a detailed description on this module.
 //!
 
 //===============================================================================================//
