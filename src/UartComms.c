@@ -1,11 +1,11 @@
 //!
 //! @file 		UartComms.c
-//! @author 	Geoffrey Hunter (gbmhunter@gmail.com)
+//! @author 	Geoffrey Hunter <gbmhunter@gmail.com> (www.cladlab.com)
 //! @date 		12/09/2012
 //! @brief 		Used for receiving/sending comms messages across the dedicated UART
 //! @details
-//!		<b>Last Modified:			</b> 27/09/2012					\n
-//!		<b>Version:					</b> v1.0.0						\n
+//!		<b>Last Modified:			</b> 07/11/2012					\n
+//!		<b>Version:					</b> v1.0.1						\n
 //!		<b>Company:					</b> CladLabs					\n
 //!		<b>Project:					</b> Free Code Modules			\n
 //!		<b>Language:				</b> C							\n
@@ -16,9 +16,7 @@
 //!		<b>Documentation Format:	</b> Doxygen					\n
 //!		<b>License:					</b> GPLv3						\n
 //!	
-//!		Used for comms uart communication in an RTOS
-//!		environment. Uses queues to allow multiple
-//!		calls to the uart at once.
+//!		See the Doxygen documentation or UartComms.c for a detailed description on this module.
 //!
 
 //===============================================================================================//
@@ -41,8 +39,12 @@
 #include "UartDebug.h"
 
 //===============================================================================================//
-//================================== PRECOMPILER CHECKS =========================================//
+//============================================ GUARDS ===========================================//
 //===============================================================================================//
+
+#ifdef __cplusplus
+	extern "C" {
+#endif
 
 #ifndef configENABLE_TASK_UART_COMMS
 	#error Please define the switch configENABLE_TASK_UART_COMMS
@@ -116,10 +118,7 @@ CY_ISR_PROTO(UartComms_UartRxIsr);
 //===================================== PUBLIC FUNCTIONS ========================================//
 //===============================================================================================//
 
-//! @brief		Start-up function. Call from main() before starting scheduler
-//! @note		Not thread-safe. Do not call from any task!
-//! @sa			main()
-//! @public
+
 void UartComms_Start(uint32 txTaskStackSize, uint8 txTaskPriority)
 {
 	#if(configENABLE_TASK_UART_COMMS == 1)
@@ -146,21 +145,13 @@ void UartComms_Start(uint32 txTaskStackSize, uint8 txTaskPriority)
 	
 }
 
-//! @brief		Returns the handle for the TX task
-//! @returns	Handle of the TX task
-//! @note		Thread-safe
-//! @public
+
 xTaskHandle UartComms_ReturnTxTaskHandle(void)
 {
 	return _txTaskHandle;
 }
 
-//! @brief		Puts null-terminated string onto tx queue
-//! @details	This is a blocking function which will not return until the entire string has been
-//!				put onto the queue. It will block if another task is currently putting stuff on the
-//!				queue (and hence the semaphore taken), or the tx queue is full (hence the UART is busy).
-//! @note		Thread-safe
-//! @public
+
 bool_t UartComms_PutString(const char* string)
 {
 	// Take semaphore to allow placing things on queue
@@ -191,17 +182,13 @@ bool_t UartComms_PutString(const char* string)
 	return TRUE;
 }
 
-//! @brief		
-//! @details	Blocks until character is received
-//! @note		Not-thread safe.
-//! @public
+
 void UartComms_GetChar(char* singleChar)
 {
 	xQueueReceive(_xRxQueue, singleChar, portMAX_DELAY);
 }
 
-//! @brief 		Returns sleep state of the UART
-//! @public
+
 bool_t UartComms_IsAsleep(void)
 {
 	if(_isAsleep == TRUE)
@@ -210,12 +197,7 @@ bool_t UartComms_IsAsleep(void)
 		return FALSE;
 }
 
-//! @brief		Used to prevent the DEBUG UART from sleeping
-//! @details	Can be called from any task, up to 255 times. The UART will be prevented from sleeping
-//! 			until a similar number of UartComms_SleepUnlock() calls have been made.
-//! @note		Thread-safe
-//! @sa			UartComms_SleepUnlock()
-//! @public
+
 void UartComms_SleepLock(void)
 {
 	// Stop context switch since UART_COMMS_Wakeup() is not thread-safe
@@ -245,13 +227,7 @@ void UartComms_SleepLock(void)
 	taskEXIT_CRITICAL();
 }
 
-//! @brief		Used to allow the DEBUG UART to sleep
-//! @details	Can be called from any task, up to 255 times. This function needs to be called
-//!				as many times as UartComms_SleepLock was called before the UART will be allowed
-//!				to sleep.
-//! @note		Thread-safe
-//! @sa			UartComms_SleepLock()
-//! @public
+
 void UartComms_SleepUnlock(void)
 {
 	// Prevent contect switch since UART_COMMS_Sleep() is not thread-safe
@@ -389,7 +365,7 @@ void UartComms_TxTask(void *pvParameters)
 //===============================================================================================//
 
 //! @brief 		ISR called when UART rx buffer has new character
-//! @public
+//! @private
 CY_ISR(UartComms_UartRxIsr)
 {
 	// Check to see if we just slept, if so, wake up peripherals
@@ -475,5 +451,10 @@ CY_ISR(UartComms_UartRxIsr)
 //========================================= GRAVEYARD ===========================================//
 //===============================================================================================//
 
+// none
+
+#ifdef __cplusplus
+	} // extern "C" {
+#endif
 
 // EOF
